@@ -6,7 +6,11 @@
 // import Navbar from "./components/Navbar";
 // import Cart from "./components/Cart"
 // import Effect from "./components/Effect";
-import APIfetch from "./components/APIfetch"
+// import APIfetch from "./components/APIfetch"
+// import Form from "./components/Form";
+// import FormState from "./components/FormState";
+// import HookForm from "./components/HookForm";
+import CartApp from "./cart/CartApp"
 
 function App() {
   // const [cartItems, setCartItems] = useState(['product 1', 'product 2', 'product 3', 'product 4'])
@@ -28,9 +32,13 @@ function App() {
         <Cart cartItems={cartItems} onClear={() => {setCartItems([])}} onRemove={handleProductRemove}/>
       </div> */}
       {/* <Effect/> */}
-      <div>
+      {/* <div>
         <APIfetch/>
-      </div>
+      </div> */}
+      {/* <Form/> */}
+      {/* <FormState/> */}
+      {/* <HookForm/> */}
+      <CartApp/>
     </>
   );
 }
