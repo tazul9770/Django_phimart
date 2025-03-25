@@ -3,39 +3,25 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const CartApp = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [cart, setCart] = useState([]);
 
-  /*
-   const cart = [
-    { name: "Laptop", price: 34000 },
-    { name: "Mobile Phone", price: 20000 },
-  ]; 
-
-  {product1: Laptop, product2: "MObile"}
-  */
-
-  //   Add Item
+  // Add item
   const addItem = (data) => {
     const existingItem = cart.find((item) => item.name === data.name);
-
     if (existingItem) {
       setCart(
         cart.map((item) =>
-          item.name === data.name
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+          item.name === data.name ? { ...item, quantity: item.quantity + 1 } : item
         )
       );
     } else {
-      setCart([
-        ...cart,
-        { name: data.name, price: parseFloat(data.price), quantity: 1 },
-      ]);
+      setCart([...cart, { name: data.name, price: parseFloat(data.price), quantity: 1 }]);
     }
+    reset();
   };
 
-  // Increase Quantity
+  // Increase quantity
   const increaseQuantity = (name) => {
     setCart(
       cart.map((item) =>
@@ -44,7 +30,7 @@ const CartApp = () => {
     );
   };
 
-  // Increase Quantity
+  // Decrease quantity
   const decreaseQuantity = (name) => {
     setCart(
       cart
@@ -55,81 +41,68 @@ const CartApp = () => {
     );
   };
 
-  // Remove Item
-  const RemoveItem = (name) => {
+  // Delete item
+  const removeItem = (name) => {
     setCart(cart.filter((item) => item.name !== name));
   };
 
-  // Calculate total price
-  const totalPrice = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  // Calculate total
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
 
   return (
-    <div className="w-2/3 mx-auto bg-gray-100 rounded-lg p-6 shadow-md">
-      {/* Add Cart Items  */}
-      <form onSubmit={handleSubmit(addItem)} className="mb-4 space-y-2">
+    <div className="mt-5 w-1/2 mx-auto bg-gray-100 rounded-lg p-6 shadow-sm">
+      <form onSubmit={handleSubmit(addItem)} className="mb-4 space-y-3">
+        {/* Add Cart items */}
         <input
           {...register("name", { required: true })}
           type="text"
           placeholder="Item Name"
-          className="border p-2 rounded w-full"
+          className="w-full border p-2 rounded-lg"
         />
+
         <input
           {...register("price", { required: true })}
           type="number"
           placeholder="Item Price"
-          className="border p-2 rounded w-full"
+          className="w-full border p-2 rounded-lg"
         />
-        <button className="bg-blue-500 text-white px-4 py-2 rounded w-full">
+
+        <button className="w-full shadow-lg cursor-pointer bg-green-500 px-2 py-3 text-white rounded-lg">
           Add Item
         </button>
       </form>
 
-      {/* Cart Items List  */}
+      {/* Cart item list */}
       {cart.length > 0 ? (
-        // Todo cart items
         <div>
           {cart.map((item) => (
-            <div
-              key={item.name}
-              className="flex justify-between items-center p-2  bg-white rounded mb-2"
-            >
+            <div key={item.name} className="flex justify-between items-center p-2 bg-white rounded mb-2">
               <p className="font-semibold">{item.name}</p>
-              <p className="text-sm text-gray-600">
-                {(item.price * item.quantity).toFixed(2)}
-              </p>
-
+              <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
               <div className="flex items-center">
                 <button
                   onClick={() => decreaseQuantity(item.name)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  className="bg-rose-500 text-white px-3 rounded py-2 cursor-pointer"
                 >
                   -
                 </button>
                 <span className="mx-2">{item.quantity}</span>
                 <button
                   onClick={() => increaseQuantity(item.name)}
-                  className="bg-green-500 text-white px-2 py-1 rounded"
+                  className="bg-pink-500 text-white px-3 rounded py-2 cursor-pointer"
                 >
                   +
                 </button>
               </div>
-
-              <button onClick={() => RemoveItem(item.name)}>
+              <button onClick={() => removeItem(item.name)} className="text-rose-500 cursor-pointer">
                 <Trash2 />
               </button>
             </div>
           ))}
-
-          {/* Total Price  */}
-          <div className="mt-4 font-bold text-lg">
-            Total: ${totalPrice.toFixed(2)}
-          </div>
+          <div className="mt-4 font-bold text-lg">Total: ${total}</div>
         </div>
       ) : (
-        <p>No Cart Items</p>
+        <p>No cart item</p>
       )}
     </div>
   );
