@@ -34,11 +34,3 @@ const APIFetch = () => {
 };
 
 export default APIFetch;
-
-/* 
-{
-    result: [
-        {}
-    ]
-}
-*/
