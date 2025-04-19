@@ -28,7 +28,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      'raect/props-type':"off",
+      'raect/prop-type':"off",
     },
   },
 ]

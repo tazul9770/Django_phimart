@@ -59,8 +59,6 @@ const HeroCarousel = () => {
             />
           </SwiperSlide>
         ))}
-
-        
       </Swiper>
     </>
   );
