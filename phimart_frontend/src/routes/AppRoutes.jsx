@@ -9,12 +9,13 @@ import Register from '../pages/Register.jsx';
 import Dashboard from '../pages/Dashboard.jsx';
 import PrivateRoute from '../Components/PrivateRoute.jsx';
 import ActivateAccount from '../Components/Registration/ActivateAccount.jsx';
+import DashboardLayout from '../layouts/DashboardLayout.jsx';
+import Profile from '../pages/Profile.jsx';
 
 const AppRoutes = () => {
     return (
         <Routes>
-            {/* <Route index element = {<Home/>}></Route>
-            <Route path="about" element={<About/>}/> */}
+            {/* Public Routes */}
             <Route element = {<MainLayout/>}>
                 <Route path = "/" element = {<Home/>} ></Route>
                 <Route path = "about" element = {<About/>} ></Route>
@@ -22,13 +23,12 @@ const AppRoutes = () => {
                 <Route path = "login" element = {<Login/>}></Route>
                 <Route path = "register" element = {<Register/>}></Route>
                 <Route path="activate/:uid/:token" element={<ActivateAccount />} />
-                <Route path='dashboard' element = {
-                    <PrivateRoute>
-                        <Dashboard/>
-                    </PrivateRoute>
-                }>
-                </Route>
             </Route>
+                {/* private route */}
+                <Route path='dashboard' element = {<PrivateRoute> <DashboardLayout/> </PrivateRoute>}>
+                    <Route index element = {<Dashboard/>}/>
+                    <Route path='profile' element = {<Profile/>}/>
+                </Route>
         </Routes>
     );
 };
